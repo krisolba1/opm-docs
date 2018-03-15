@@ -85,8 +85,8 @@ Copy ssh public key to homedir on opm-project.org
 ## Wordpress 
 ### Wordpress files
 Copy the wordpress files over from backup to local server. There are daily backup tar files located in /usr/share/nginx/database-backups/wordpress-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
-- *rsync -av kristin@opm-project.org:/home/kristin/wordpressbackup.tar.gz /home/kristin 
-- sudo tar xzvf /home/kristin/wordpressbackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/wordpress)
+- *rsync -av kristin@opm-project.org:/home/kristin/wordpressbackup.tar.gz /home/kristin* 
+- *sudo tar xzvf /home/kristin/wordpressbackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/wordpress)
 
 Repeat the above for the following folder:
   - /usr/share/nginx/package
