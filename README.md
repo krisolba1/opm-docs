@@ -75,28 +75,28 @@ Create ssh keys etc
 - ssh-keygen -t rsa
 - sudo apt-get install netcat-openbsd
 Create config file .ssh/config and insert the following:\
-*Host opm-project.org\
+*Host opm-project.org  opm-backup.northeurope.cloudapp.azure.com\
       ProxyCommand=netcat -X connect -x www-proxy.statoil.no:80 %h %p\
       ServerAliveInterval 10*
 
-Copy ssh public key to homedir on opm-project.org
+Copy ssh public key to homedir on opm-project.org  and to backup server (opm-backup)
 - ssh-copy-id kristin@opm-project.org
-
+- ssh-copy-id opm-backup@opm-backup.northeurope.cloudapp.azure.com (or cat id_rsa.pub and paste to opm-backups authorized_keys)
 ## Wordpress 
 ### Wordpress files
-Copy the wordpress files over from backup to local server. There are daily backup tar files located in /usr/share/nginx/database-backups/wordpress-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
-- *rsync -av kristin@opm-project.org:/home/kristin/wordpressbackup.tar.gz /home/kristin* 
+Copy the wordpress files over from backup to local server. There are daily backup tar files located on backup server: opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
+- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-files/wordpressbackup.tar.gz /home/kristin* 
 - *sudo tar xzvf /home/kristin/wordpressbackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/wordpress)
 
 Repeat the above for the following folder:
-  - /usr/share/nginx/package
-  - /usr/share/nginx/plots
-  - /var/www/apidocumentation
-  - /usr/share/nginx/html
+  - /usr/share/nginx/package (location on backup-server /datadrive/opm-backups/package)
+  - /usr/share/nginx/plots  (location on backup server /datadrive/opm-backups/plots)
+  - /var/www/apidocumentation (location on backup server /datadrive/opm-backups/apidocumentation)
+  - /usr/share/nginx/html (location on backup server /datadrive/opm-backups/html)
 
 ### Wordpress database
-There are db backups on opm-project.org:/usr/share/nginx/database-backups/wordpress-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
-- *rsync -av kristin@opm-project.org:/home/kristin/wordpress-db-backup.sql /home/kristin*
+There are db backups on opm-backup:/datadrive/opm-backups/wordpress/wordpress-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
+- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-db/wordpress-db-backup.sql /home/kristin*
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
@@ -117,8 +117,8 @@ Go to localhost in browser. If you get "error establishing database connection",
 
 ## Mediawiki
 ### Wiki files
-Copy the wiki files over from backup to local server. There are daily backup tar files located in /usr/share/nginx/database-backups/wiki-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
-- *rsync -av kristin@opm-project.org:/home/kristin/wikibackup.tar.gz /home/kristin* 
+Copy the wiki files over from backup to local server. There are daily backup tar files located in /datadrive/opm-backups/mediawiki/wiki-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
+- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/mediawiki/wiki-files/wikibackup.tar.gz /home/kristin* 
 - *sudo tar xzvf /home/kristin/wikibackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/mediawiki). Make sure the owner is www-data:www-data (not kristin/or username)
 - Update nginx config file with new server block:
 ```javascript
@@ -140,8 +140,8 @@ Copy the wiki files over from backup to local server. There are daily backup tar
 Update /etc/hosts  ->  127.0.0.1       wiki.opm-project.org
 
 ### Wiki database
-There are db backups on opm-project.org:/usr/share/nginx/database-backups/mediawiki-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
-- *rsync -av kristin@opm-project.org:/home/kristin/wiki-db-backup.sql /home/kristin*
+There are db backups on opm-backup:/datadrive/opm-backups/mediawiki/mediawiki-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
+- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/mediawiki/mediawiki-db/wiki-db-backup.sql /home/kristin*
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
@@ -177,13 +177,14 @@ Edit nginx config file to include the following
 	}
 ```
 Folders to keep backup of:
-- /usr/lib/mailman
-- /var/lib/mailman
-- /etc/mailman
-- /var/log/mailman
-- /var/lock/mailman
-- /usr/lib/cgi-bin/mailman
-- /usr/share/images/mailman
+- /usr/lib/mailman (location of backup: /datadrive/opm-backups/mailman/mailman_usr_lib)
+- /var/lib/mailman  (location of backup: /datadrive/opm-backups/mailman/mailman_var_lib)
+- /etc/mailman  (location of backup: /datadrive/opm-backups/mailman/templates)
+- /var/log/mailman (location of backup: /datadrive/opm-backups/mailman/logs)
+- /var/lock/mailman (location of backup: /datadrive/opm-backups/mailman/locks)
+- /usr/lib/cgi-bin/mailman (location of backup: /datadrive/opm-backups/mailman/cgibin)
+- /usr/share/images/mailman (location of backup: /datadrive/opm-backups/mailman/Icons)
+There are backups of all these folders on opm-backup.northeurope.cloudapp.azure.com, at /datadrive/opm-backups/mailman
 
 These above folders must be copied from backup to local server.
 
