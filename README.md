@@ -104,7 +104,7 @@ Log in to mysql
 - *mysql -u root -p*
 - *mysql> CREATE DATABASE 'dbname';*
 - *mysql> USE 'dbname';*
-- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
+- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';* 
 - *mysql> GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';*
 - *mysql> FLUSH PRIVILEGES;*
 
@@ -149,7 +149,7 @@ Log in to mysql
 - *mysql -u root -p*
 - *mysql> CREATE DATABASE dbname;*
 - *mysql> USE opmwiki;*
-- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
+- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';* 
 - *mysql> GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';*
 - *mysql> FLUSH PRIVILEGES;*
 
