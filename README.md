@@ -88,6 +88,8 @@ Copy the wordpress files over from backup to local server. There are daily backu
 - *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-files/wordpressbackup.tar.gz /home/kristin* 
 - *sudo tar xzvf /home/kristin/wordpressbackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/wordpress)
 
+- There is a http version tar file under /datadrive/opm-backups/wordpress/wordpress.http.tar.gz.
+
 Repeat the above for the following folder:
   - /usr/share/nginx/package (location on backup-server /datadrive/opm-backups/package)
   - /usr/share/nginx/plots  (location on backup server /datadrive/opm-backups/plots)
