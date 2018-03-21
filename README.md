@@ -102,14 +102,14 @@ There are db backups on opm-backup:/datadrive/opm-backups/wordpress/wordpress-db
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
-- *mysql> CREATE DATABASE wordpress;*
-- *mysql> USE wordpress;*
-- *mysql> CREATE USER 'wpu'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
-- *mysql> GRANT ALL PRIVILEGES ON * . * TO 'wpu'@'localhost';*
+- *mysql> CREATE DATABASE 'dbname';*
+- *mysql> USE 'dbname';*
+- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
+- *mysql> GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';*
 - *mysql> FLUSH PRIVILEGES;*
 
 Restore the database from backup.sql file (mysql -u "user" -p "databasename"<"backupfile.sql")
-- *mysql -u wpu -p wordpress<wordpress-db-backup.sql*
+- *mysql -u user -p dbname<wordpress-db-backup.sql*
 
 Go to localhost in browser. If you get "error establishing database connection", it's probably an issue with the db backup file, try to restore from another backup file. Since this is a local copy you can test that it is working without internet access as well. 
 
@@ -147,14 +147,14 @@ There are db backups on opm-backup:/datadrive/opm-backups/mediawiki/mediawiki-db
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
-- *mysql> CREATE DATABASE opmwiki;*
+- *mysql> CREATE DATABASE dbname;*
 - *mysql> USE opmwiki;*
-- *mysql> CREATE USER 'opm_wiki'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
-- *mysql> GRANT ALL PRIVILEGES ON * . * TO 'opm_wiki'@'localhost';*
+- *mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY 'passord';* (same password as original db)
+- *mysql> GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';*
 - *mysql> FLUSH PRIVILEGES;*
 
 Restore the database from backup.sql file (mysql -u "user" -p "databasename"<"backupfile.sql")
-- *mysql -u opm_wiki -p opmwiki<wiki-db-backup.sql*
+- *mysql -u user -p dbname<wiki-db-backup.sql*
 
 ## Mailman
 Edit nginx config file to include the following
