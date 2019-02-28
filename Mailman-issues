@@ -2,7 +2,7 @@
 
 ## Mails not going out to list and not appear in archive
 - Mailman is probably not running, chech /var/lock/mailman for master-qrunner and master-qrunner.opm-web.1218, restart mailman *sudo service mailman restart*
-- Update archives *sudo ./bin/arch opm*
+- Update archives *sudo ./bin/arch --wipe opm*
 
 ## Mailman admin interface, moderator queue expected http, should be https
 - My solution was to go to /usr/lib/mailman/Mailman/ -> *sudo vim mm_cfg.py*
