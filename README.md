@@ -191,7 +191,7 @@ There are backups of all these folders on opm-backup.northeurope.cloudapp.azure.
 These above folders must be copied from backup to local server.
 
 - For the archives: If some mails are missing from archive, run as root\
-    *./bin/arch listname*
+    *./bin/arch --wipe listname*
 - Listinfo: I had no fcgiwrap.socket file, fixed by *sudo apt-get install fcgiwrap*
 - Permissions: check permissions *sudo ./bin/check_perms -f*
     
