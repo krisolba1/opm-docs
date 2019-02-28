@@ -8,3 +8,15 @@
 - My solution was to go to /usr/lib/mailman/Mailman/ -> *sudo vim mm_cfg.py*
 - Change Default_URL_PATTERN = 'https://%s/cgi-bin/mailman/'
 - Run *$prefix/bin/withlist -l -r fix_url opm* as root.
+
+# User unable to subscribe (pending, not getting confirmation mails) -> qrunner not running, run $prefix /bin/mailmanctl start. 
+
+If it is running, you will find its pid in data/master-qrunner.pid and
+> >there will also be two files in locks/, one named master-qrunner and
+> >containing the line
+> >
+> >master-qrunner.opm-web.pid
+
+And the second named master-qrunner.opm-web.pid and having the
+> >same contents where host.example.com is the actual host name and pid
+> >is the actual pid of the master qrunner process.
