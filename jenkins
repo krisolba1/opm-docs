@@ -1,1 +1,4 @@
-
+# Jenkins , node disconnected.
+Restart master
+- go to inventory, find the server which runs jenkins res instance.
+- Log in as root, go to /data/.../jenkins/ and run docker-compose up --force-recreate -d
