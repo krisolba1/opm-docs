@@ -75,17 +75,17 @@ Create ssh keys etc
 - ssh-keygen -t rsa
 - sudo apt-get install netcat-openbsd
 Create config file .ssh/config and insert the following:\
-*Host opm-project.org  opm-backup.northeurope.cloudapp.azure.com\
+*Host opm-project.org  opm-backup.\
       ProxyCommand=netcat -X connect -x www-proxy.statoil.no:80 %h %p\
       ServerAliveInterval 10*
 
-Copy ssh public key to homedir on opm-project.org  and to backup server (opm-backup)
-- ssh-copy-id kristin@opm-project.org
-- ssh-copy-id opm-backup@opm-backup.northeurope.cloudapp.azure.com (or cat id_rsa.pub and paste to opm-backups authorized_keys)
+Copy ssh public key to homedir on opm-server and to backup server (opm-backup)
+- ssh-copy-id kristin@opm-pserver
+- ssh-copy-id opm-backup(or cat id_rsa.pub and paste to opm-backups authorized_keys)
 ## Wordpress 
 ### Wordpress files
-Copy the wordpress files over from backup to local server. There are daily backup tar files located on backup server: opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
-- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-files/wordpressbackup.tar.gz /home/kristin* 
+Copy the wordpress files over from backup to local server. There are daily backup tar files located on backup server: opm-backup@opm-backup:/datadrive/opm-backups/wordpress/wordpress-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
+- *rsync -av opm-backup@opm-backup:/datadrive/opm-backups/wordpress/wordpress-files/wordpressbackup.tar.gz /home/kristin* 
 - *sudo tar xzvf /home/kristin/wordpressbackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/wordpress)
 
 - There is a http version tar file under /datadrive/opm-backups/wordpress/wordpress.http.tar.gz.
@@ -98,7 +98,7 @@ Repeat the above for the following folder:
 
 ### Wordpress database
 There are db backups on opm-backup:/datadrive/opm-backups/wordpress/wordpress-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
-- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/wordpress/wordpress-db/wordpress-db-backup.sql /home/kristin*
+- *rsync -av opm-backup@opm-backup:/datadrive/opm-backups/wordpress/wordpress-db/wordpress-db-backup.sql /home/kristin*
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
@@ -120,7 +120,7 @@ Go to localhost in browser. If you get "error establishing database connection",
 ## Mediawiki
 ### Wiki files
 Copy the wiki files over from backup to local server. There are daily backup tar files located in /datadrive/opm-backups/mediawiki/wiki-files, copy backup over to somewhere your user can access it (e.g /home/kristin) 
-- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/mediawiki/wiki-files/wikibackup.tar.gz /home/kristin* 
+- *rsync -av opm-backup@opm-backup:/datadrive/opm-backups/mediawiki/wiki-files/wikibackup.tar.gz /home/kristin* 
 - *sudo tar xzvf /home/kristin/wikibackup.tar.gz --directory /* (This will put the files on local server under /usr/share/nginx/mediawiki). Make sure the owner is www-data:www-data (not kristin/or username)
 - Update nginx config file with new server block:
 ```javascript
@@ -128,7 +128,7 @@ Copy the wiki files over from backup to local server. There are daily backup tar
             listen 80;
             root /usr/share/nginx/mediawiki;
             index index.php;
-            server_name wiki.opm-project.org;
+            server_name ;
             
             location ~ \.php$ {
                     try_files $uri = 404;
@@ -143,7 +143,7 @@ Update /etc/hosts  ->  127.0.0.1       wiki.opm-project.org
 
 ### Wiki database
 There are db backups on opm-backup:/datadrive/opm-backups/mediawiki/mediawiki-db. Copy the last one (or another one if desired over to somewhere your user can access it). 
-- *rsync -av opm-backup@opm-backup.northeurope.cloudapp.azure.com:/datadrive/opm-backups/mediawiki/mediawiki-db/wiki-db-backup.sql /home/kristin*
+- *rsync -av opm-backup@opm-backup:/datadrive/opm-backups/mediawiki/mediawiki-db/wiki-db-backup.sql /home/kristin*
 #### Create database
 Log in to mysql
 - *mysql -u root -p*
